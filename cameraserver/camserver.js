@@ -4,7 +4,8 @@ const FormData = require("form-data");
 const fs = require("fs");
 
 // let image_url = "http://192.168.43.1:8080/shot.jpg";
-let image_url = "http://192.168.43.1:8080/shot.jpg";
+let image_url = "http://192.168.137.187:8080/shot.jpg";
+
 let image_dest = "D:/car.jpg";
 
 let prevcar = 0;
@@ -80,5 +81,6 @@ async function demo() {
       });
   }
 }
+
 console.log("Camera server started...");
 demo();
