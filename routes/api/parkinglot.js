@@ -57,12 +57,37 @@ var findEmptyParkingSlotAndFill = (ParkingSpots, id, name, tid, carnumber) => {
   }
 };
 
+var findParkingSlotOfThisAndEmpty = (ParkingSpots, carnumber) => {
+  for (var parkinggroup in ParkingSpots) {
+    for (var slot of Object.keys(ParkingSpots[parkinggroup])) {
+      console.log("searching=> " + ParkingSpots[parkinggroup][slot].carnumber);
+      if (ParkingSpots[parkinggroup][slot][carnumber] == carnumber) {
+        console.log("Found parking slot of this car and emptied.");
+        ParkingSpots[parkinggroup][slot] = "";
+      }
+    }
+  }
+};
+
 // @route POST api/parkinglot/sensor
 // @desc  get data from sensors
 // @access Public
 router.post("/sensor", async (req, res) => {
   console.log(req.query);
   res.status(200).send("Got data");
+});
+
+// @route POST api/parkinglot/exit
+// @desc  Exit car server
+// @access Public
+router.post("/exit", async (req, res) => {
+  try {
+    const { carnumber } = req.body;
+    findParkingSlotOfThisAndEmpty(ParkingSpots, carnumber);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
 });
 
 // @route POST api/parkinglot
